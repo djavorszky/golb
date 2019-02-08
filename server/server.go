@@ -2,12 +2,12 @@ package server
 
 import (
 	"github.com/labstack/echo"
-	"log"
 	"net/http"
 )
 
 type Blog struct {
-	BlogEntries []Entry
+	logger  echo.Logger
+	entries []Entry
 }
 
 type Entry struct {
@@ -15,17 +15,16 @@ type Entry struct {
 	Content string `json:"content"`
 }
 
-func NewBlog() Blog {
-	return Blog{[]Entry{
-		{"hello title", "hello content"},
-		{"title two", "content two"},
-	}}
+func NewBlog(logger echo.Logger) Blog {
+	return Blog{
+		logger: logger,
+		entries: []Entry{
+			{"hello title", "hello content"},
+			{"title two", "content two"},
+		},
+	}
 }
 
-func (b Blog) Entries() func(c echo.Context) error {
-	return func(c echo.Context) error {
-		log.Printf("blogentries: %v", b.BlogEntries)
-
-		return c.JSON(http.StatusOK, b.BlogEntries)
-	}
+func (b Blog) Entries(c echo.Context) error {
+	return c.JSON(http.StatusOK, b.entries)
 }

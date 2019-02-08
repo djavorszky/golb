@@ -7,16 +7,16 @@ import (
 	"net/http"
 )
 
-var blog = server.NewBlog()
-
 func main() {
 	e := echo.New()
 
-	e.Logger.Error(blog)
-
 	addMiddlewares(e)
 
-	defineRoutes(e)
+	blog := server.NewBlog(e.Logger)
+
+	routes := getRoutes(blog)
+
+	defineRoutes(e, routes)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
@@ -27,7 +27,7 @@ func addMiddlewares(e *echo.Echo) {
 	//	e.Use(middleware.Recover())
 }
 
-func defineRoutes(e *echo.Echo) {
+func defineRoutes(e *echo.Echo, routes []Route) {
 	seen := make(map[string]bool)
 	for _, r := range routes {
 		if _, ok := seen[r.Path]; ok {

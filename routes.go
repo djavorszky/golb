@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/labstack/echo"
+	"golb/server"
 	"net/http"
 )
 
@@ -13,15 +14,18 @@ type Route struct {
 	Mw      []echo.MiddlewareFunc
 }
 
-var routes = []Route{
-	{
-		Method:  http.MethodGet,
-		Path:    "/",
-		Handler: index,
-	},
-	{
-		Method:  http.MethodGet,
-		Path:    "/v0/blog/entries",
-		Handler: blog.Entries(),
-	},
+func getRoutes(blog server.Blog) []Route {
+	return []Route{
+		{
+			Method:  http.MethodGet,
+			Path:    "/",
+			Handler: index,
+		},
+		{
+			Method:  http.MethodGet,
+			Path:    "/v0/blog/entries",
+			Handler: blog.Entries,
+		},
+	}
+
 }
