@@ -7,10 +7,12 @@ import (
 	"net/http"
 )
 
-var blog server.Blog
+var blog = server.NewBlog()
 
 func main() {
 	e := echo.New()
+
+	e.Logger.Error(blog)
 
 	addMiddlewares(e)
 
@@ -22,7 +24,7 @@ func main() {
 func addMiddlewares(e *echo.Echo) {
 	e.Use(middleware.Logger())
 	e.Use(middleware.RequestID())
-	e.Use(middleware.Recover())
+	//	e.Use(middleware.Recover())
 }
 
 func defineRoutes(e *echo.Echo) {
