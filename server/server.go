@@ -2,29 +2,22 @@ package server
 
 import (
 	"github.com/labstack/echo"
+	"golb/server/backend"
 	"net/http"
 )
 
 type Blog struct {
-	logger  echo.Logger
-	entries []Entry
+	logger echo.Logger
+	be     backend.Store
 }
 
-type Entry struct {
-	Title   string `json:"title"`
-	Content string `json:"content"`
-}
-
-func NewBlog(logger echo.Logger) Blog {
+func NewBlog(logger echo.Logger, be backend.Store) Blog {
 	return Blog{
 		logger: logger,
-		entries: []Entry{
-			{"hello title", "hello content"},
-			{"title two", "content two"},
-		},
+		be:     be,
 	}
 }
 
 func (b Blog) Entries(c echo.Context) error {
-	return c.JSON(http.StatusOK, b.entries)
+	return c.JSON(http.StatusOK, b.be.GetAll())
 }

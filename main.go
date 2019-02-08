@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"golb/server"
+	"golb/server/backend"
 	"net/http"
 )
 
@@ -12,7 +13,7 @@ func main() {
 
 	addMiddlewares(e)
 
-	blog := server.NewBlog(e.Logger)
+	blog := server.NewBlog(e.Logger, backend.MockStore{})
 
 	routes := getRoutes(blog)
 
