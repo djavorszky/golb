@@ -16,16 +16,8 @@ type Route struct {
 
 func getRoutes(blog server.Blog) []Route {
 	return []Route{
-		{
-			Method:  http.MethodGet,
-			Path:    "/",
-			Handler: index,
-		},
-		{
-			Method:  http.MethodGet,
-			Path:    "/v0/blog/entries",
-			Handler: blog.Entries,
-		},
+		{Method: http.MethodGet, Path: "/", Handler: index},
+		{Method: http.MethodGet, Path: "/v0/blog/entries", Handler: blog.Entries},
 	}
 
 }
