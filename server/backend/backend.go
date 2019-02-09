@@ -18,7 +18,9 @@ func (mb MockStore) GetAll() []model.BlogEntry {
 }
 
 func NewMockStore() MockStore {
-	cdate1 := time.Unix(1405544146, 0)
+	loc, _ := time.LoadLocation("Europe/Budapest")
+
+	cdate1 := time.Unix(1405544146, 0).In(loc)
 	udate1 := cdate1
 	pdate1 := cdate1
 
