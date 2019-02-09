@@ -19,5 +19,7 @@ func NewBlog(logger echo.Logger, be backend.Store) Blog {
 }
 
 func (b Blog) Entries(c echo.Context) error {
-	return c.JSON(http.StatusOK, b.be.GetAll())
+	entries := b.be.GetAll()
+
+	return c.JSON(http.StatusOK, entries)
 }

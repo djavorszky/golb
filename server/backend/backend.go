@@ -6,11 +6,10 @@ type Store interface {
 	GetAll() []model.BlogEntry
 }
 
-type MockStore struct{}
+type MockStore struct {
+	Entries []model.BlogEntry
+}
 
 func (mb MockStore) GetAll() []model.BlogEntry {
-	return []model.BlogEntry{
-		{"hello title", "hello content"},
-		{"title two", "content two"},
-	}
+	return mb.Entries
 }
