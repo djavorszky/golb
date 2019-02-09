@@ -1,6 +1,15 @@
 package model
 
+import "time"
+
 type BlogEntry struct {
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	ID          string    `json:"id"`
+	Author      string    `json:"author"`
+	Tags        []string  `json:"tags"`
+	Categories  []string  `json:"categories"`
+	Title       string    `json:"title"`
+	Content     string    `json:"content"`
+	CreateDate  time.Time `json:"createDate"`
+	UpdateDate  time.Time `json:"updateDate"`
+	PublishDate time.Time `json:"publishDate"`
 }

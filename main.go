@@ -5,7 +5,6 @@ import (
 	"github.com/labstack/echo/middleware"
 	"golb/server"
 	"golb/server/backend"
-	"golb/server/model"
 	"net/http"
 )
 
@@ -14,17 +13,9 @@ func main() {
 
 	addMiddlewares(e)
 
-	blog := server.NewBlog(e.Logger,
-		backend.MockStore{
-			Entries: []model.BlogEntry{
-				{"hello title", "hello content"},
-				{"title two", "content two"},
-			},
-		},
-	)
+	blog := server.NewBlog(e.Logger, backend.NewMockStore())
 
 	routes := getRoutes(blog)
-
 	defineRoutes(e, routes)
 
 	e.Logger.Fatal(e.Start(":1323"))
